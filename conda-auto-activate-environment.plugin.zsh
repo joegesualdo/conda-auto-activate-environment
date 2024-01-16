@@ -1,7 +1,6 @@
 export CONDACONFIGDIR=""
 cd() { builtin cd "$@" && 
 if [ -f $PWD/environment.yml ]; then
-    echo "Found environment.yml"
     export CONDACONFIGDIR=$PWD
     # File name
     file="environment.yml"
@@ -11,10 +10,9 @@ if [ -f $PWD/environment.yml ]; then
     # Output the extracted name
     # Check if conda activate failed
 
-    echo "The value for the 'name' key is: $name"
     conda activate $name
     if [ $? -ne 0 ]; then
-        echo "Failed to activate conda environment $name"
+        echo "Creating conda environment $name because it does not exist."
         # Add any additional commands you want to run on failure here
         conda env create -f $file
         conda activate $name
